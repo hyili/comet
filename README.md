@@ -37,19 +37,19 @@ cd {into your comet directory}
 ## ActiveDB Experiment
 - Startup a network through mininet with 4 hosts
   - 10.0.0.1
-    - ```zsh
-    ./runclass.sh edu.washington.cs.activedht.expt.Node -h 10.0.0.1 -p 1234 -b 10.0.0.1:1234
-    ```
+  ```zsh
+  ./runclass.sh edu.washington.cs.activedht.expt.Node -h 10.0.0.1 -p 1234 -b 10.0.0.1:1234
+  ```
   - 10.0.0.2
-    - ```zsh
-    ./runclass.sh edu.washington.cs.activedht.expt.Node -h 10.0.0.2 -p 1234 -b 10.0.0.1:1234
-    ```
+  ```zsh
+  ./runclass.sh edu.washington.cs.activedht.expt.Node -h 10.0.0.2 -p 1234 -b 10.0.0.1:1234
+  ```
   - 10.0.0.3
-    - ```zsh
-    ./runclass.sh edu.washington.cs.activedht.expt.Node -h 10.0.0.3 -p 1234 -b 10.0.0.1:1234
-    ```
+  ```zsh
+  ./runclass.sh edu.washington.cs.activedht.expt.Node -h 10.0.0.3 -p 1234 -b 10.0.0.1:1234
+  ```
   - 10.0.0.4
-    - ```zsh
-    ./runclass.sh edu.washington.cs.activedht.expt.remote.StoreLua 10.0.0.1:1234 apps/object/replication.lua
-    ./runclass.sh edu.washington.cs.activedht.expt.remote.LifetimeGet 10.0.0.1:1234 /tmp/logfile [payload]
-    ```
+  ```zsh
+  ./runclass.sh edu.washington.cs.activedht.expt.remote.StoreLua 10.0.0.1:1234 apps/object/replication.lua
+  ./runclass.sh edu.washington.cs.activedht.expt.remote.LifetimeGet 10.0.0.1:1234 /tmp/logfile [payload]
+  ```
