@@ -51,10 +51,15 @@ public class PutAction implements Runnable {
 						.getTransport().getLocalContact(), false, 0) } };
 
 		final byte[][] keys = new byte[][] { key.getBytes() };
-
 		if (nodes != null) {
+			// TODO: fix bug
+			List<DHTTransportContact> neighbors = new ArrayList<DHTTransportContact>();
+			Iterator<NodeWrapper> itr = nodes.iterator();
+			for (int i = 0; itr.hasNext(); ++i) {
+				neighbors.add(itr.next().contact);
+			}
 			control.putDirectEncodedKeys(keys, "ActiveDHT Put", valueSets,
-					nodes, operationAdapter);
+					neighbors, operationAdapter);
 		} else {
 			control.lookupEncoded(key.getBytes(), "ActiveDHT Lookup", 0, false,
 					new PutOperationAdapter(

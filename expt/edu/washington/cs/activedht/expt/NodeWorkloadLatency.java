@@ -5,7 +5,11 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
+import se.krka.kahlua.vm.LuaState;
+import se.krka.kahlua.vm.serialize.Deserializer;
+
 import com.aelitis.azureus.core.dht.DHTOperationAdapter;
+import com.aelitis.azureus.core.dht.transport.DHTTransportValue;
 
 /**
  * @author levya
@@ -16,6 +20,7 @@ public abstract class NodeWorkloadLatency {
 	private static final int TRIALS = 1000;
 
 	private final ActivePeer peer;
+	private final ActivePeer boot;
 	private final int experimentTime;
 	private final PrintStream out;
 
@@ -27,10 +32,11 @@ public abstract class NodeWorkloadLatency {
 	
 	private final int numObjects;
 
-	public NodeWorkloadLatency(ActivePeer peer, int numObjects,
+	public NodeWorkloadLatency(ActivePeer peer, ActivePeer boot, int numObjects,
 			int experimentTime, PrintStream out, InputStream in)
 			throws Exception {
 		this.peer = peer;
+		this.boot = boot;
 		this.experimentTime = experimentTime;
 		this.numObjects = numObjects;
 		this.out = out;
@@ -51,13 +57,24 @@ public abstract class NodeWorkloadLatency {
 		sema.acquireUninterruptibly();
 	}
 
+	public void output(DHTTransportValue get) {
+		if (get == null)
+		    System.out.println("hello");
+		LuaState state = new LuaState();
+		String result = Deserializer.deserializeBytes(get.getValue(), state.getEnvironment()).toString();                                        
+		System.out.println(result);
+	}
+	
 	public void get(final String key) {
 		new Thread() {
 			public void run() {
 				while (keepRunning) {
 					long startTime = System.currentTimeMillis();
 					for (int i = 0; i < TRIALS; ++i) {
-						peer.getLocal(key.getBytes());
+						System.out.println("peer");
+						output(peer.getLocal(key.getBytes()));
+						System.out.println("boot");
+						output(boot.getLocal(key.getBytes()));
 					}
 					long elapsedTime = System.currentTimeMillis() - startTime;
 					out.println(i + "," + 1.0 * elapsedTime / TRIALS);

@@ -68,7 +68,7 @@ public class ActiveDB implements DHTDB {
 	}
 
 	public void init() {
-		SimpleTimer.addPeriodicEvent("ActiveDB Timer", 600000,
+		SimpleTimer.addPeriodicEvent("ActiveDB Timer", 60000,
 		// DHTControl.CACHE_REPUBLISH_INTERVAL_DEFAULT,
 				performer);
 	}

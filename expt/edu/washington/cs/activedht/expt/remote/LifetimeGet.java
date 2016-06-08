@@ -16,9 +16,14 @@ import se.krka.kahlua.vm.serialize.Type;
  * 
  */
 public class LifetimeGet extends RemoteGet {
+	
+	String payload;
 
 	public LifetimeGet(String[] args) throws Exception {
 		super(args);
+		if (args.length > 2) {
+			setPayload(args[2]);
+		}
 	}
 
 	public String getArrayString(LuaMapTable table) {
@@ -59,7 +64,13 @@ public class LifetimeGet extends RemoteGet {
 	}
 
 	public byte[] getPayload() {
-		return new byte[] {};
+		if (payload == null)
+			return new byte[] {};
+		return this.payload.getBytes();
+	}
+	
+	public void setPayload(String input) {
+		this.payload = input;
 	}
 
 	public static void main(String[] args) throws Exception {

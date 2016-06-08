@@ -21,10 +21,10 @@ import se.krka.kahlua.vm.serialize.Serializer;
 public class LuaNodeWorkloadLatency extends NodeWorkloadLatency {
 
 	
-	public LuaNodeWorkloadLatency(ActivePeer peer, int numObjects,
+	public LuaNodeWorkloadLatency(ActivePeer peer, ActivePeer boot, int numObjects,
 			int experimentTime, PrintStream out, InputStream in)
 			throws Exception {
-		super(peer, numObjects, experimentTime, out, in);
+		super(peer, boot, numObjects, experimentTime, out, in);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class LuaNodeWorkloadLatency extends NodeWorkloadLatency {
 	}
 
 	public static void main(String[] args) throws Exception {
-		int numObjects = 100;
+		int numObjects = 1;
 		int experimentTime = 50000;
 		int localPort = 2134;
 		String localHostname = "localhost";
@@ -78,7 +78,7 @@ public class LuaNodeWorkloadLatency extends NodeWorkloadLatency {
 		ActivePeer peer = new ActivePeer(localPort, bootstrapLoc, Level.OFF,
 				valueFactory, 200);
 		LuaNodeWorkloadLatency microbenchmark = new LuaNodeWorkloadLatency(
-				peer, numObjects, experimentTime, out, in);
+				peer, boot, numObjects, experimentTime, out, in);
 		boot.init(localHostname);
 		peer.init(localHostname);
 		Thread.sleep(5000);
